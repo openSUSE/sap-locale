@@ -1,0 +1,91 @@
+This package contains all the SAP specific locales needed for running
+an SAP Application Server.
+
+The SAP applications were originally written at a time when the
+standards for various locales were either not defined at all or were
+not in wide usage yet before the release of the SAP applications.
+
+Consequently, there now exists a divergency between the needs of
+the SAP applications running under Linux and what is being supplied
+via the GNU C Library Locales, which follows the current standards
+for the various defined locales.
+
+In order to be able to use SAP applications under SUSE Linux (and
+especially under SUSE Linux Enterprise Server (SLES)), Novell is
+supplying this package which contains the legacy locales required
+for the SAP applications. The detailed list of locales is provided
+in package documentation. These locales can coexist with the standard
+locales on your system.
+
+This package covers the following locales, specifically:
+
+    * cs_CZ.iso88592@SAP
+      Czech using Latin-2 charset but with sorting order compatible with
+      HP-UX and Windows instead of SunOS, Linux and CSN 97 6030 - numbers
+      are sorted before letters in this locale.
+
+    * sk_SK.iso88592@SAP
+      Slovak using Latin-2 charset but with sorting order compatible with
+      HP-UX and Windows instead of SunOS, Linux and CSN 97 6030 - numbers
+      are sorted before letters in this locale.
+
+    * de_DE.iso88591@SAP_HP
+      Same as "de_DE.iso88591", but using the same collate as applies for
+      the "de_DE.iso88591" locale on HPUX systems.
+
+    * et_EE.iso88594@SAP
+      Estonian using "Latin-4" as charset (the standard "glibc-locale"
+      installation is using "Latin-1" also known as "ISO-8859-1" as charset).
+
+    * lt_LT.iso88594@SAP
+      Lithuanian using "Latin-4" as charset (the standard "glibc-locale"
+      installation is using "Latin-1" also known as "ISO-8859-1" as charset).
+
+    * lv_LV.iso88594@SAP
+      Latvian using "Latin-4" as charset (the standard "glibc-locale"
+      installation is using "Latin-1" also known as "ISO-8859-1" as charset).
+
+    * ko_KR.euckr@SAP
+      Korean locale using charset EUC-KR (superset of "KSC5601").
+
+    * tr_TR.iso88599@SAP
+      Based on the "tr_TR" locale contained in "glibc-locale", but changes
+      the "to{upper,lower}()" conversions found in the "glibc-locale"
+      version for the following characters in the Turkish charset using
+      ISO 8859-9:
+
+	0x49 (U0049) <=> 0xfd (U0131)  and  0xfd (U0131) <=> 0x49 (U0049)
+	0x69 (U0069) <=> 0xdd (U0130)  and  0xdd (U0130) <=> 0x69 (U0069).
+
+      to what is needed on SAP systems:
+
+	0x49 (U0049) <=> 0x69 (U0069)  and  0xfd (U0131) <=> 0xdd (U0130)
+	0x69 (U0069) <=> 0x49 (U0049)  and  0xdd (U0130) <=> 0xfd (U0131).
+
+      Using the SAP mapping of these characters resolved the ambiguous
+      definitions found in the standard "glibc-locale" definitions that
+      arise from the standard ISO 8859-9 definition itself.
+
+      In the ISO 8859-9 standard, these unambiguous mappings are
+      specified:
+
+	0x49 (U0049) <=> 0x69 (U0069)
+	0x69 (U0069) <=> 0x49 (U0049)
+
+      together with these ambiguous definitions:
+
+	0xfd (U0131) <=> 0x49 (U0049)	(ambiguous with the above!)
+	0xdd (U0130) <=> 0x69 (U0069)	(ambiguous with the above!)
+
+      which can be seen in the following references:
+
+      http://www.eki.ee/letter/chardata.cgi?cp=8859-9&1st=with+first+half
+      http://www.eki.ee/letter/chardata.cgi?lang=tr+Turkish&script=latin
+      http://www.eki.ee/letter/
+
+    * ja_JP.SAPSJIS
+      ja_JP locale using customized SJIS charmap covering also characters
+      from the 0xExxx codepoint range.
+
+      Note that the SJIS charset conversion is aliased to SAPSJIS in case
+      this package is installed!

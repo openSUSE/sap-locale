@@ -1,0 +1,7 @@
+# GNU libc iconv configuration for SAP Systems
+alias	SJIS//			SAPSJIS//
+module	SAPSJIS//		INTERNAL		SAPSJIS	1
+module	INTERNAL		SAPSJIS//		SAPSJIS	1
+
+alias	SAP//			ISO-8859-1//
+
