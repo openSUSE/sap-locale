@@ -1,0 +1,5 @@
+*.so
+gconv/
+locale/
+locales/de_DE@HP
+locales/sk_SK@SAP
