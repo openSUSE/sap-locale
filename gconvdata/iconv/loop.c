@@ -207,6 +207,25 @@
     continue;								      \
   }
 
+#if __GLIBC_PREREQ (2, 21)
+# define GCONV_TRANSLIT_STEP \
+    if ((step_data->__flags & __GCONV_TRANSLIT) != 0)			      \
+      result = __gconv_transliterate					      \
+	(step, step_data, *inptrp,					      \
+	 &inptr, inend, &outptr, irreversible)
+#else
+# define GCONV_TRANSLIT_STEP \
+  struct __gconv_trans_data *trans;					      \
+  for (trans = step_data->__trans; trans != NULL; trans = trans->__next)      \
+    {									      \
+      result = DL_CALL_FCT (trans->__trans_fct,				      \
+			    (step, step_data, trans->__data, *inptrp,	      \
+			     &inptr, inend, &outptr, irreversible));	      \
+      if (result != __GCONV_ILLEGAL_INPUT)				      \
+	break;								      \
+    }
+#endif
+
 /* Error handling for the TO_LOOP direction, with use of transliteration/
    transcription functions and ignoring of errors.  Note that we cannot use
    the do while (0) trick since `break' and `continue' must reach certain
@@ -225,10 +244,7 @@
     UPDATE_PARAMS;							      \
 									      \
     /* First try the transliteration methods.  */			      \
-    if ((step_data->__flags & __GCONV_TRANSLIT) != 0)			      \
-      result = __gconv_transliterate					      \
-	(step, step_data, *inptrp,					      \
-	 &inptr, inend, &outptr, irreversible);				      \
+    GCONV_TRANSLIT_STEP;						      \
 									      \
     REINIT_PARAMS;							      \
 									      \
