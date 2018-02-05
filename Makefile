@@ -6,12 +6,6 @@ I18Nlocales := /usr/share/i18n/locales
 locales := ./locales
 charmaps := ./charmaps
 
-# The UTF-8 symbol value for the "/" (slash) character.
-# Needed, while the "copy" statement in the locale source files read by "localedef" removes "/"
-# characters in the path name, but accepts and uses the UTF-8 symbol value currectly!
-SLASH := <U002F>
-
-
 # -------------------------------------------------------------------------------------------------
 # Listing of all the SAP specific locales this Makefile handles
          SAP_GERMAN_HP := de_DE
@@ -110,9 +104,9 @@ $(SAP_GERMAN_HP_LOCALE): $(SAP_GERMAN_HP_SRC)
 
 $(SAP_GERMAN_HP_SRC): $(I18Nlocales)/$(SAP_GERMAN_HP) $(SAP_GERMAN_HP_I18N)
 	sed -e \
-	    's;copy "iso14651_t1";copy "$(subst /,$(SLASH),$(SAP_GERMAN_HP_COLLATE))";' \
+	    's;copy "iso14651_t1";copy "$(subst /,//,$(SAP_GERMAN_HP_COLLATE))";' \
 	    -e \
-		's;copy "i18n";copy "$(subst /,$(SLASH),$(SAP_GERMAN_HP_I18N))";' \
+		's;copy "i18n";copy "$(subst /,//,$(SAP_GERMAN_HP_I18N))";' \
 	    $(I18Nlocales)/$(SAP_GERMAN_HP) >$@
 
 $(SAP_ESTOIAN_LOCALE):
@@ -132,9 +126,9 @@ $(SAP_CZECH_LOCALE): $(SAP_CZECH_SRC)
 
 $(SAP_SLOVAK_SRC): $(I18Nlocales)/$(SAP_SLOVAK_HP)
 	sed -e \
-	    's;copy "cs_CZ";copy "$(subst /,$(SLASH),$(SAP_SLOVAK_COLLATE))";' \
+	    's;copy "cs_CZ";copy "$(subst /,//,$(SAP_SLOVAK_COLLATE))";' \
 		-e \
-		's;copy "i18n";copy "$(subst /,$(SLASH),$(SAP_GERMAN_HP_I18N))";' \
+		's;copy "i18n";copy "$(subst /,//,$(SAP_GERMAN_HP_I18N))";' \
 	    $(I18Nlocales)/$(SAP_SLOVAK) >$@
 
 $(SAP_SLOVAK_LOCALE): $(SAP_SLOVAK_SRC)
