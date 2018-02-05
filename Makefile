@@ -6,6 +6,9 @@ I18Nlocales := /usr/share/i18n/locales
 locales := ./locales
 charmaps := ./charmaps
 
+# Disable localedef warning about ASCII incompatible locale
+NO_ASCII_WARNING = --no-warnings=ascii
+
 # -------------------------------------------------------------------------------------------------
 # Listing of all the SAP specific locales this Makefile handles
          SAP_GERMAN_HP := de_DE
@@ -138,4 +141,4 @@ $(SAP_TURKISH_LOCALE): $(SAP_TURKISH_SRC)
 	localedef -ci $(SAP_TURKISH_SRC) -f $(SAP_TURKISH_CHARMAP) $(SAP_TURKISH_LOCALE)
 
 $(SAP_JAPANESE_LOCALE): $(SAP_JAPANESE_CHARMAP)
-	localedef -ci $(SAP_JAPANESE_SRC) -f $(SAP_JAPANESE_CHARMAP) $(SAP_JAPANESE_LOCALE)
+	localedef -ci $(NO_ASCII_WARNING) $(SAP_JAPANESE_SRC) -f $(SAP_JAPANESE_CHARMAP) $(SAP_JAPANESE_LOCALE)
